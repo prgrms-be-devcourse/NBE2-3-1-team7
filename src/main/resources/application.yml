@@ -37,5 +37,4 @@ spring:
 server:
   shutdown: graceful
 
-mybatis:
-  mapper-locations: classpath:mappers/mapper*.xml
+mybatis:mapper-locations: classpath:mappers/mapper*.xml
