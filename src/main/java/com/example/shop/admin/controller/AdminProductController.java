@@ -8,9 +8,7 @@ import com.example.shop.admin.service.AdminProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api/admin/products") //디폴트 경로 설정
