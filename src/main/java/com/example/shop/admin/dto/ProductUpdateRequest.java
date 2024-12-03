@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class ProductUpdateRequest {
 
     private Long productId;
-    private String quantity;
+    private Long quantity;
     private Long price;
     private String image;
     private String description;

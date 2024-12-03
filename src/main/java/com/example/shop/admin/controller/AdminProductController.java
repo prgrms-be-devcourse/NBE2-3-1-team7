@@ -6,6 +6,7 @@ import com.example.shop.admin.dto.ProductUpdateRequest;
 import com.example.shop.admin.service.AdminProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +22,18 @@ public class AdminProductController {
 
     private final AdminProductService adminProductService;
 
-    // 요청을 받으면 데이터 업데이트
     @PutMapping("/{id}")
-    public String updateProductById(@PathVariable Long id,@RequestBody ProductUpdateRequest productUpdateRequest) {
-            productUpdateRequest.setProductId(id);
-            String result=adminProductService.postProduct(productUpdateRequest);
+    public ResponseEntity<String> updateProductById(
+            @PathVariable Long id,
+            @RequestBody ProductUpdateRequest productUpdateRequest) {
 
-        return "<html><body><h1>Update Result</h1><p>" + result + "</p></body></html>";
+        productUpdateRequest.setProductId(id);
+        String result = adminProductService.postProduct(productUpdateRequest);
 
+        if ("정상적으로 입력되었습니다".equals(result)) {
+            return ResponseEntity.ok(result); // 200 OK
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result); // 400 Bad Request
+        }
     }
-
 }
