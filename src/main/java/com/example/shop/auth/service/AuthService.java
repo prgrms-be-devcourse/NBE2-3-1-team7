@@ -71,4 +71,14 @@ public class AuthService {
         emailCodeRepository.save(receivedMail, authCode, 3 * 60L);
     }
 
+    public boolean verifyAuthCode(EmailCodeRequest emailCodeRequest) {
+        return emailCodeRepository.findAuthCode(emailCodeRequest.getEmail())
+                .filter(code -> code.equals(emailCodeRequest.getAuthCode()))  // 인증 코드 비교
+                .map(code -> {
+                    emailCodeRepository.deleteByKey(emailCodeRequest.getEmail());
+                    return Boolean.TRUE;
+                })
+                .orElse(Boolean.FALSE);  // 값이 없거나 인증 코드가 다르면 false 반환
+    }
+
 }

@@ -33,7 +33,8 @@ public class SecurityConfig  {
             "/api/auth/sign-in",
             "/error",
             "/api/auth/reissue",
-            "/api/auth/email/auth-code"
+            "/api/auth/email/auth-code",
+            "/api/auth/auth-code/verification"
     };
 
 

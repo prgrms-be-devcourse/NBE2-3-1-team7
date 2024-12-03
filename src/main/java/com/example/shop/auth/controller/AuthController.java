@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,16 @@ public class AuthController {
     public ResponseEntity<Void> sendEmailCode(@RequestBody @Valid EmailCodeRequest email) {
         authService.sendAuthCode(email.getEmail());
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "이메일 인증 코드 검증")
+    @PostMapping("/auth-code/verification")
+    public ResponseEntity<Void> verifyEmailCode(@RequestBody @Valid EmailCodeRequest emailCodeRequest) {
+        boolean isValid = authService.verifyAuthCode(emailCodeRequest);
+        if (isValid) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
     }
 
 }
