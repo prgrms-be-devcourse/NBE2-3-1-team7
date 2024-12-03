@@ -24,11 +24,8 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/products")
-    public ResponseEntity<Void> addCartProduct(
-            @AuthenticationPrincipal UserDetails userDetails
-            , @RequestBody @Valid AddCartProductRequest request) {
-        String userEmail = userDetails.getUsername();
-        cartService.addCartProduct(userEmail, request);
+    public ResponseEntity<Void> addCartProduct(@RequestBody @Valid AddCartProductRequest request) {
+        cartService.addCartProduct(request);
         return ResponseEntity.ok().build();
     }
 

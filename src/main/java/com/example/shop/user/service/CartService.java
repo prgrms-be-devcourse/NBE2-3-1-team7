@@ -28,15 +28,14 @@ public class CartService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void addCartProduct(String userEmail, AddCartProductRequest request) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(UserNotFoundException::new);
+    public void addCartProduct(AddCartProductRequest request) {
+        User user = getCurrentUser();
 
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(ProductNotFoundException::new);
 
         // 기존 장바구니에 같은 상품이 있는지 확인
-        Optional<CartDetail> existingCart = cartDetailRepository.findByUserAndProduct(user, product);
+        Optional<CartDetail> existingCart = cartDetailRepository.findByUserIdAndProductId(user.getId(), product.getId());
 
         if (existingCart.isPresent()) {
             // 기존 상품이 있으면 수량 추가
@@ -56,7 +55,7 @@ public class CartService {
 
         List<CartDetail> cartDetails = cartDetailRepository.findByUserIdWithProduct(user.getId());
         return cartDetails.stream()
-                .map(cartDetail -> new CartDetailResponse(cartDetail.getId(),
+                .map(cartDetail -> new CartDetailResponse(cartDetail.getProduct().getId(),
                         cartDetail.getProduct().getProductName(),
                         cartDetail.getProduct().getPrice(),
                         cartDetail.getQuantity()))
