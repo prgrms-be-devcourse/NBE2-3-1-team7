@@ -34,6 +34,7 @@ spring:
   web:
     resources:
       static-locations: file:///C:/ProductImage/
+
 mybatis:
   mapper-locations: classpath:mappers/mapper*.xml
 server:
