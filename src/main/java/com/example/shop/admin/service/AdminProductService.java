@@ -3,15 +3,17 @@ package com.example.shop.admin.service;
 import com.example.shop.admin.dao.AdminDAO;
 import com.example.shop.admin.dto.ProductCreateRequest;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-
+@RequiredArgsConstructor
 @Service
 public class AdminProductService {
-    @Autowired
-    private AdminDAO adminDAO;
+
+    private final AdminDAO adminDAO;
+
     public String insertProduct(ProductCreateRequest productCreateRequest) {
         int result=adminDAO.createProduct( productCreateRequest);
         //   return adminDAO.createProduct( productCreateRequest);
