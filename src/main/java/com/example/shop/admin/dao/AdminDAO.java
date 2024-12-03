@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public class AdminDAO {
 
-
-
     @Autowired
     private AdminMapper adminMapper;
 

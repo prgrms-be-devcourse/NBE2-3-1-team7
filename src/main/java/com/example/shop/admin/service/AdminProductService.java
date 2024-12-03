@@ -9,19 +9,8 @@ import java.util.List;
 @Service
 public class AdminProductService {
 
-
-
-
     @Autowired
     private AdminDAO adminDAO;
-
-
-
-
-
-
-
-
 
     //전체리스트갖고오기
     public List<ProductTO> getAllProducts() {
