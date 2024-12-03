@@ -18,7 +18,6 @@ public class AdminProductController {
     @Autowired
     private AdminProductService adminProductService;
 
-
     @PostMapping
     public ResponseEntity<String> insertProduct(@RequestBody ProductCreateRequest product) {
         String result = adminProductService.insertProduct(product);
