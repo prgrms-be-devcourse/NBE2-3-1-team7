@@ -11,18 +11,11 @@ import java.time.LocalDateTime;
 @Setter
 public class ProductCreateRequest {
 
-
-
-
-
-
-    private String product_name;
-    private String quantity;
-    private String price;
+    private String productName;
+    private Long quantity;
+    private Long price;
     private String image;
     private String description;
     private LocalDateTime created_at;
-
-
-
+    private LocalDateTime updated_at;
 }

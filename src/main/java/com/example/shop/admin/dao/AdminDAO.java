@@ -8,13 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AdminDAO {
 
-
-
     @Autowired
     private AdminMapper adminMapper;
-
-
-
 
     public int createProduct(ProductCreateRequest productCreateRequest) {
         return adminMapper.insertProduct(productCreateRequest);
