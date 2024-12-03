@@ -70,7 +70,7 @@ public class CartService {
         CartDetail cartDetail = cartDetailRepository.findByUserIdAndProductId(user.getId(), productId)
                                                     .orElseThrow(CartProductNotFoundException::new);
 
-        cartDetailRepository.deleteByUserIdAndProductId(user.getId(), productId);
+        cartDetailRepository.delete(cartDetail);
     }
 
     @Transactional
