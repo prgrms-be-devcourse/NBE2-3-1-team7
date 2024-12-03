@@ -13,7 +13,6 @@ public class AdminProductService {
 
     @Autowired
     private AdminDAO adminDAO;
-
     public String insertProduct(ProductCreateRequest productCreateRequest) {
         int result=adminDAO.createProduct( productCreateRequest);
         //   return adminDAO.createProduct( productCreateRequest);
