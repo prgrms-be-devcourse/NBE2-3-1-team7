@@ -6,8 +6,10 @@ import com.example.shop.domain.product.Product;
 import com.example.shop.domain.product.ProductRepository;
 import com.example.shop.domain.user.User;
 import com.example.shop.domain.user.UserRepository;
+import com.example.shop.global.exception.CartProductNotFoundException;
 import com.example.shop.global.exception.ProductNotFoundException;
 import com.example.shop.global.exception.UserNotFoundException;
+import com.example.shop.global.util.SecurityUtil;
 import com.example.shop.user.dto.AddCartProductRequest;
 import com.example.shop.user.dto.CartDetailResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class CartService {
 
@@ -26,7 +27,7 @@ public class CartService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-
+    @Transactional
     public void addCartProduct(String userEmail, AddCartProductRequest request) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(UserNotFoundException::new);
@@ -62,4 +63,20 @@ public class CartService {
                 .toList();
     }
 
+    @Transactional
+    public void removeCartProduct(Long productId) {
+        User user = getCurrentUser();
+
+        // 삭제할 상품이 장바구니에 있는지 확인
+        CartDetail cartDetail = cartDetailRepository.findByUserIdAndProductId(user.getId(), productId)
+                                                    .orElseThrow(CartProductNotFoundException::new);
+
+        cartDetailRepository.deleteByUserIdAndProductId(user.getId(), productId);
+    }
+
+    private User getCurrentUser() {
+        String email = SecurityUtil.getCurrentUserEmail();
+        return userRepository.findByEmail(email)
+                .orElseThrow(UserNotFoundException::new);
+    }
 }

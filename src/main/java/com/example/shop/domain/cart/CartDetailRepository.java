@@ -16,4 +16,9 @@ public interface CartDetailRepository extends JpaRepository<CartDetail, Long> {
 
     @Query("select c from CartDetail c join fetch c.product where c.user = :user and c.product = :product")
     Optional<CartDetail> findByUserAndProduct(@Param("user") User user, @Param("product") Product product);
+
+    @Query("select c from CartDetail c join fetch c.product where c.user.id = :userId and c.product.id = :productId")
+    Optional<CartDetail> findByUserIdAndProductId(@Param("userId") Long userId, @Param("productId") Long productId);
+
+    void deleteByUserIdAndProductId(Long userId, Long productId);
 }

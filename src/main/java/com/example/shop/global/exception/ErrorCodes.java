@@ -17,6 +17,7 @@ public enum ErrorCodes {
     // 장바구니 관련
     INVALID_CART_QUANTITY(HttpStatus.BAD_REQUEST, "수량은 1개 이상이어야 합니다."),
     PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "등록된 상품이 아닙니다."),
+    CART_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "장바구니에 해당 상품이 없습니다."),
 
     // Email 관련 에러
     EMAIL_FORM_CREATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 템플릿 생성 중 오류가 발생했습니다."),
