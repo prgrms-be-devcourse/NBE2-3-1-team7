@@ -30,10 +30,8 @@ public class CartController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<CartDetailResponse>> getCartDetails(@AuthenticationPrincipal UserDetails userDetails) {
-        String userEmail = userDetails.getUsername();
-        List<CartDetailResponse> cartDetails = cartService.getCartDetails(userEmail);
-
+    public ResponseEntity<List<CartDetailResponse>> getCartDetails() {
+        List<CartDetailResponse> cartDetails = cartService.getCartDetails();
         return ResponseEntity.ok(cartDetails);
     }
 

@@ -49,9 +49,8 @@ public class CartService {
 
     }
 
-    public List<CartDetailResponse> getCartDetails(String userEmail) {
-        User user = userRepository.findByEmail(userEmail)
-                .orElseThrow(UserNotFoundException::new);
+    public List<CartDetailResponse> getCartDetails() {
+        User user = getCurrentUser();
 
         List<CartDetail> cartDetails = cartDetailRepository.findByUserIdWithProduct(user.getId());
         return cartDetails.stream()
