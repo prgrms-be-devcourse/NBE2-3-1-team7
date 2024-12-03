@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AdminProductService {
-
     @Autowired
     private AdminDAO adminDAO;
     public String insertProduct(ProductCreateRequest productCreateRequest) {

@@ -11,7 +11,7 @@ public class AdminDAO {
     private AdminMapper adminMapper;
 
     public int createProduct(ProductCreateRequest productCreateRequest) {
-        return adminMapper.insertProduct(productCreateRequest);
+         return adminMapper.insertProduct(productCreateRequest);
 
     }
 }

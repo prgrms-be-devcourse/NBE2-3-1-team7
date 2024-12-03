@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/admin/products")
 public class AdminProductController {
-
     @Autowired
     private AdminProductService adminProductService;
 
