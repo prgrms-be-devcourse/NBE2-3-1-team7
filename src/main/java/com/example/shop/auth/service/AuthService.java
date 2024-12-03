@@ -7,8 +7,8 @@ import com.example.shop.domain.user.Role;
 import com.example.shop.domain.user.User;
 import com.example.shop.domain.user.UserRepository;
 import com.example.shop.global.config.auth.JwtProvider;
-import com.example.shop.global.exception.DuplicatedEmail;
-import com.example.shop.global.exception.UserNotFound;
+import com.example.shop.global.exception.DuplicatedEmailException;
+import com.example.shop.global.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -52,11 +52,11 @@ public class AuthService {
     }
     private void saveRefreshToken(String tokenValue, String email) {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(UserNotFound::new);
+                .orElseThrow(UserNotFoundException::new);
         refreshTokenRepository.save(new RefreshToken(tokenValue, user.getId().toString()));
     }
     private void checkDuplicatedEmail(SignUpRequest signUpRequest) {
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) throw new DuplicatedEmail();
+        if(userRepository.existsByEmail(signUpRequest.getEmail())) throw new DuplicatedEmailException();
     }
 
 }
