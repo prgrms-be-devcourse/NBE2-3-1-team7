@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 public class ProductTO {
 
 
-    private int productId;
+    private Long productId;
     private String productName;
-    private String quantity;
-    private String price;
+    private Long quantity;
+    private Long price;
     private String image;
     private String description;
     private LocalDateTime createdAt;
