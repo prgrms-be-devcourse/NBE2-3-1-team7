@@ -24,34 +24,37 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+	// Spring Boot Starter Dependencies
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	// JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	// Mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	// Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// DB
-	implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
-
-	// Redis 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Database
+	implementation 'org.mariadb.jdbc:mariadb-java-client:3.1.2'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
+
 	// Swagger
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
-	//jwt
+
+	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-	// lombok
+
+	// Lombok
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
 
-	// test
+	// Testing
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// MyBatis Test Dependencies
+	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4'
 }
 
 tasks.named('test') {

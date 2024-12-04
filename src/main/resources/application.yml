@@ -34,12 +34,13 @@ spring:
       initialize-schema: always
   web:
     resources:
-      static-locations: file:///C:/ProductImage/ # 이미지 경로 설정
+      static-locations: file:///C:/ProductImage/ # 이미지 저장 경로 설정
+
 server:
   shutdown: graceful
 
 mybatis:
   mapper-locations: classpath:mappers/*.xml
-  type-aliases-package: com.example.shop.admin.dto
+  type-aliases-package: com.example.shop.user.dto, com.example.shop.admin.dto
   configuration:
     map-underscore-to-camel-case: true
