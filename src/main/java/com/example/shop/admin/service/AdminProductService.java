@@ -15,7 +15,6 @@ public class AdminProductService {
 
     private final AdminDAO adminDAO;
 
-    // 물품 생성
     public String insertProduct(ProductCreateRequest productCreateRequest) {
         int result = adminDAO.createProduct(productCreateRequest);
         if (result == 0) {
@@ -24,7 +23,7 @@ public class AdminProductService {
         return "정상적으로 입력되었습니다";
     }
 
-    // 물품 수정
+
     public String postProduct(ProductUpdateRequest productUpdateRequest) {
         int result = adminDAO.updateProduct(productUpdateRequest);
         if (result == 0) {
@@ -33,7 +32,7 @@ public class AdminProductService {
         return "정상적으로 입력되었습니다";
     }
 
-    // 전체 물품 조회
+    // main 브랜치에서 추가된 메서드
     public List<ProductTO> getAllProducts() {
         return adminDAO.getAllProducts();
     }

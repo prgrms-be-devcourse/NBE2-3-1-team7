@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/admin/products")
+@RequestMapping("/api/admin/products") // 디폴트 경로 설정
 public class AdminProductController {
 
     private final AdminProductService adminProductService;
@@ -36,13 +36,15 @@ public class AdminProductController {
         List<ProductTO> lists = adminProductService.getAllProducts();
 
         if (lists.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content
+            // 데이터가 없는 경우 204 No Content 상태 반환
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(lists); // 200 OK
+        // 데이터가 있는 경우 200 OK 상태와 함께 반환
+        return ResponseEntity.ok(lists);
     }
 
-    // 물품 수정
+    // feature/#40-물품수정 브랜치에서 추가한 코드
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProductById(
             @PathVariable Long id,

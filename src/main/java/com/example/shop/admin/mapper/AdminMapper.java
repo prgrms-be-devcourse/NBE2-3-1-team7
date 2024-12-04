@@ -10,12 +10,10 @@ import java.util.List;
 @Mapper
 public interface AdminMapper {
 
-     // 물품 생성
-     int insertProduct(ProductCreateRequest productCreateRequest);
+    int insertProduct(ProductCreateRequest productCreateRequest);
 
-     // 물품 수정
-     int updateProduct(ProductUpdateRequest productUpdateRequest);
+    int updateProduct(ProductUpdateRequest productUpdateRequest);
 
-     // 전체 물품 조회
-     List<ProductTO> selectAllProduct();
+    // main 브랜치에서 추가된 메서드
+    List<ProductTO> selectAllProduct();
 }
