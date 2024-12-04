@@ -3,25 +3,25 @@
 <mapper namespace="com.example.shop.user.mapper.UserMapper">
 
     <select id="getAllProducts" resultType="productResponse">
-        select product_id as productId, product_name as productName, price, image
-        from product
+        select product_id, product_name, price, image
+        from products
     </select>
 
     <select id="getProductDetail" parameterType="Long" resultType="productResponse">
-        select product_id as productId, product_name as productName, price, description, image
-        from product
-        where product_id = #{productId}
+        select product_id, product_name, price, description, image
+        from products
+        where product_id = #{product_id}
     </select>
 
     <select id="getProductByNameOrPrice" parameterType="map" resultType="productResponse">
-        select product_id as productId, product_name as productName, price, image
-        from product
+        select product_id, product_name, price, image
+        from products
         <where>
-            <if test="productName != null and productName != ''">
-                product_name like CONCAT('%', #{productName}, '%')
+            <if test="product_name != null and product_name != ''">
+                product_name like concat('%', #{product_name}, '%')
             </if>
             <if test="price != null">
-                <if test="productName != null and productName != ''">
+                <if test="product_name != null and product_name != ''">
                     and
                 </if>
                 price &lt;= #{price}
