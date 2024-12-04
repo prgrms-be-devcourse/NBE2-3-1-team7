@@ -15,5 +15,4 @@ public class ProductResponse {
     @NonNull private Long price;
     private String description;
     @NonNull private String image;
-
 }
