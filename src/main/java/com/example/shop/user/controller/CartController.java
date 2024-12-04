@@ -2,19 +2,14 @@ package com.example.shop.user.controller;
 
 import com.example.shop.user.dto.AddCartProductRequest;
 import com.example.shop.user.dto.CartDetailResponse;
+import com.example.shop.user.dto.UpdateCartQuantityRequest;
 import com.example.shop.user.service.CartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/cart")
@@ -24,19 +19,32 @@ public class CartController {
     private final CartService cartService;
 
     @PostMapping("/products")
-    public ResponseEntity<Void> addCartProduct(
-            @AuthenticationPrincipal UserDetails userDetails
-            , @RequestBody @Valid AddCartProductRequest request) {
-        String userEmail = userDetails.getUsername();
-        cartService.addCartProduct(userEmail, request);
+    public ResponseEntity<Void> addCartProduct(@RequestBody @Valid AddCartProductRequest request) {
+        cartService.addCartProduct(request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/products")
-    public ResponseEntity<List<CartDetailResponse>> getCartDetails(@AuthenticationPrincipal UserDetails userDetails) {
-        String userEmail = userDetails.getUsername();
-        List<CartDetailResponse> cartDetails = cartService.getCartDetails(userEmail);
-
+    public ResponseEntity<List<CartDetailResponse>> getCartDetails() {
+        List<CartDetailResponse> cartDetails = cartService.getCartDetails();
         return ResponseEntity.ok(cartDetails);
+    }
+
+    @DeleteMapping("/products/{productId}")
+    public ResponseEntity<Void> removeCartProduct(@PathVariable("productId") Long productId) {
+        cartService.removeCartProduct(productId);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @PutMapping("/products/{productId}")
+    public ResponseEntity<Void> updateCartQuantity(@PathVariable("productId") Long productId, @RequestBody @Valid UpdateCartQuantityRequest request) {
+        cartService.updateCartQuantity(productId, request.getQuantity());
+    }
+
+    @DeleteMapping("/products")
+    public ResponseEntity<Void> removeAllCartProducts() {
+        cartService.removeAllCartProducts();
+        return ResponseEntity.ok().build();
     }
 }

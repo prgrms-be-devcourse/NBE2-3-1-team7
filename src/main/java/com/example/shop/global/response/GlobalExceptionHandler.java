@@ -13,8 +13,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessExceptionHandler.class)
     public ResponseEntity<ErrorResponse> handleCustomException(BusinessExceptionHandler e) {
-        HttpStatus errorCode = e.getErrorCodes().getStatus();
-        return ResponseEntity.status(errorCode).body(new ErrorResponse(errorCode.name(),e.getMessage()));
+        ErrorCodes error = e.getErrorCodes();
+        return ResponseEntity
+                .status(error.getStatus())
+                .body(new ErrorResponse(error.getMessage(), error.getStatus().toString()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
