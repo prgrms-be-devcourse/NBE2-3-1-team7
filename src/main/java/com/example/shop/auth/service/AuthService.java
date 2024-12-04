@@ -87,12 +87,11 @@ public class AuthService {
                 .orElse(Boolean.FALSE);  // 값이 없거나 인증 코드가 다르면 false 반환
     }
 
-    public AccessTokenResponse reissue(String bearerToken) {
-        String accessToken = bearerToken.substring(7);
+    public AccessTokenResponse reissue(String accessToken) {
         Long memberId = getMemberIdByAccessToken(accessToken);
 
-        validateTokens(memberId); // 리프레시 토큰 존재여부, 액세스토큰 id 일치여부 확인
-        Authentication authentication = jwtProvider.getAuthentication(bearerToken.substring(7));
+        validateRefreshToken(memberId); // 리프레시 토큰 존재여부 확인
+        Authentication authentication = jwtProvider.getAuthentication(accessToken);
         TokenDto tokenDto = jwtProvider.generateToken(authentication); //토큰 재발급
 
         deleteAndSaveRefreshToken(tokenDto.getRefreshToken(),memberId);
@@ -109,8 +108,7 @@ public class AuthService {
                 .orElseThrow(UserNotFoundException::new)
                 .getId();
     }
-    private void validateTokens(Long memberId) {
-        // TODO: 커밋 후 pull 받고 getCurrent 활용해서 accessToken 검증 추가하기
+    private void validateRefreshToken(Long memberId) {
         refreshTokenRepository.findByMemberId(memberId).orElseThrow(RefreshTokenExpiredException::new);
     }
 
