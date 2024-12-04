@@ -34,6 +34,9 @@ spring:
       initialize-schema: always
 server:
   shutdown: graceful
+
 mybatis:
-  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mappers/usermapper.xml
   type-aliases-package: com.example.shop.user.dto
