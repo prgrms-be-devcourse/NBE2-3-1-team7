@@ -20,6 +20,10 @@ public enum ErrorCodes {
     CART_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "장바구니에 해당 상품이 없습니다."),
     CART_EMPTY(HttpStatus.BAD_REQUEST, "장바구니가 비어있습니다."),
 
+    // 주문 관련
+    EMPTY_CART(HttpStatus.BAD_REQUEST, "장바구니가 비어있습니다."),
+    EMPTY_ORDER_DETAIL(HttpStatus.BAD_REQUEST, "주문 상세 내역이 존재하지 않습니다."),
+
     // Email 관련 에러
     EMAIL_FORM_CREATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 템플릿 생성 중 오류가 발생했습니다."),
     EMAIL_SEND_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "Email 서버에 문제가 발생하였습니다.");
