@@ -13,8 +13,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -47,10 +50,15 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
 
-    @Builder(builderMethodName = "createOrder")  // createOrder() 메서드로 builder 호출
+    @Column(name = "order_number", unique = true, nullable = false)
+    private String orderNumber;
+
+    // createOrder() 메서드로 builder 호출
+    @Builder(builderMethodName = "createOrder")
     public Order(User user, DeliveryInfo deliveryInfo) {
         this.orderStatus = OrderStatus.PAID;  // 초기 상태 설정
         this.deliveryInfo = deliveryInfo;
+        this.orderNumber = generateOrderNumber(); // 주문 번호 세팅
         addUser(user);
     }
 
@@ -98,5 +106,14 @@ public class Order extends BaseEntity {
     // 주문 상태 변경
     public void changeStatus(OrderStatus status) {
         this.orderStatus = status;
+    }
+
+    // 주문 번호 생성
+    private String generateOrderNumber() {
+        LocalDateTime now = LocalDateTime.now();
+        String datePart = now.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String uniquePart = UUID.randomUUID().toString().substring(0, 12).toUpperCase();
+
+        return String.format("%s_%s", datePart, uniquePart);
     }
 }
