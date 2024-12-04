@@ -34,7 +34,7 @@ spring:
       initialize-schema: always
   web:
     resources:
-      static-locations: file:///C:/ProductImage/ # 이미지 저장 경로 설정
+      static-locations: file:///C:/ProductImage/ # 이미지 경로 설정
 server:
   shutdown: graceful
 
