@@ -20,7 +20,7 @@ public class AuthController {
 
     @Operation(summary = "로그인")
     @PostMapping("/sign-in")
-    public SignInResponse signIn(@RequestBody SignInRequest signInRequest) {
+    public AccessTokenResponse signIn(@RequestBody SignInRequest signInRequest) {
         return authService.signIn(signInRequest);
     }
 
@@ -55,6 +55,12 @@ public class AuthController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+    }
+
+    @Operation(summary = "액세스 토큰 재발급")
+    @PostMapping("/reissue")
+    public ResponseEntity<AccessTokenResponse> reissue(@RequestHeader("Authorization") String header) {
+        return ResponseEntity.ok(authService.reissue(header));
     }
 
 }

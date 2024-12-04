@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessExceptionHandler.class)
-    public ErrorResponse handleCustomException(BusinessExceptionHandler e) {
-        ErrorCodes error = e.getErrorCodes();
-        return new ErrorResponse(error.getMessage(), error.getStatus().toString());
+    public ResponseEntity<ErrorResponse> handleCustomException(BusinessExceptionHandler e) {
+        HttpStatus errorCode = e.getErrorCodes().getStatus();
+        return ResponseEntity.status(errorCode).body(new ErrorResponse(errorCode.name(),e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
