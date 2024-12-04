@@ -19,4 +19,5 @@ public class ProductUpdateRequest {
     private String description;
     private LocalDateTime updatedAt;
 
+
 }

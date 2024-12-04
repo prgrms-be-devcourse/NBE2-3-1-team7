@@ -15,7 +15,6 @@
         set quantity=#{quantity}, price=#{price}, image=#{image}, description=#{description}, updated_at=Now()
         where product_Id=#{productId}
     </update>
-
     <!-- 모든 제품 조회 -->
     <select id="selectAllProduct" resultType="ProductTO">
         select product_id, product_name, quantity, price, image, description, created_at, updated_at

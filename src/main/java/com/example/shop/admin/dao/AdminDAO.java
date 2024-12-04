@@ -29,6 +29,7 @@ public class AdminDAO {
 
     public int createProduct(ProductCreateRequest productCreateRequest) {
         return adminMapper.insertProduct(productCreateRequest);
+
     }
 
 }

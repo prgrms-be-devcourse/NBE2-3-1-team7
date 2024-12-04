@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 
 public class ProductTO {
 
-
     private Long productId;
     private String productName;
     private Long quantity;

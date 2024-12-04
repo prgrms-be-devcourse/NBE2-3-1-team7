@@ -17,7 +17,6 @@ import java.util.List;
 public class AdminProductController {
 
     private final AdminProductService adminProductService;
-
     // 물품 생성
     @PostMapping
     public ResponseEntity<String> insertProduct(@RequestBody ProductCreateRequest product) {

@@ -23,7 +23,6 @@ public class AdminProductService {
         return "정상적으로 입력되었습니다";
     }
 
-
     public String postProduct(ProductUpdateRequest productUpdateRequest) {
         int result = adminDAO.updateProduct(productUpdateRequest);
         if (result == 0) {

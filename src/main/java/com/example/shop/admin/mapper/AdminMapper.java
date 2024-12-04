@@ -14,6 +14,5 @@ public interface AdminMapper {
 
     int updateProduct(ProductUpdateRequest productUpdateRequest);
 
-    // main 브랜치에서 추가된 메서드
     List<ProductTO> selectAllProduct();
 }
