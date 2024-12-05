@@ -10,8 +10,25 @@ public enum ErrorCodes {
     NO_AUTH_ACCESS_TOKEN(HttpStatus.BAD_REQUEST,"액세스 토큰이 존재하지 않습니다"),
     NO_AUTHORIZATION_HEADER(HttpStatus.BAD_REQUEST,"Authorization이 존재하지 않습니다"),
     NO_BEARER(HttpStatus.BAD_REQUEST,"bearer 타입 토큰이 존재하지 않습니다"),
-    LOG_IN_NOT_MATCH(HttpStatus.BAD_REQUEST, "로그인 정보가 일치하지 않습니다");
+    DUPLICATE_EMAIL(HttpStatus.CONFLICT,"중복 이메일입니다"),
+    LOG_IN_NOT_MATCH(HttpStatus.BAD_REQUEST, "로그인 정보가 일치하지 않습니다"),
+    NO_AUTHENTICATION(HttpStatus.UNAUTHORIZED, "인증 정보가 존재하지 않습니다"),
 
+    // 장바구니 관련
+    INVALID_CART_QUANTITY(HttpStatus.BAD_REQUEST, "수량은 1개 이상이어야 합니다."),
+    PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "등록된 상품이 아닙니다."),
+    CART_PRODUCT_NOT_FOUND(HttpStatus.BAD_REQUEST, "장바구니에 해당 상품이 없습니다."),
+    EMPTY_CART(HttpStatus.BAD_REQUEST, "장바구니가 비어있습니다."),
+
+    // 주문 관련
+    EMPTY_ORDER_DETAIL(HttpStatus.BAD_REQUEST, "주문 상세 내역이 존재하지 않습니다."),
+
+    // 재고 관련
+    NOT_ENOUGH_QUANTITY(HttpStatus.BAD_REQUEST, "상품 수량이 부족합니다."),
+
+    // Email 관련 에러
+    EMAIL_FORM_CREATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 템플릿 생성 중 오류가 발생했습니다."),
+    EMAIL_SEND_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "Email 서버에 문제가 발생하였습니다.");
 
     private String message;
     private HttpStatus status;
