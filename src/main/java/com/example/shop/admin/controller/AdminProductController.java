@@ -5,6 +5,7 @@ import com.example.shop.admin.dto.ProductFilterRequest;
 import com.example.shop.admin.dto.ProductUpdateRequest;
 import com.example.shop.admin.dto.ProductTO;
 import com.example.shop.admin.service.AdminProductService;
+import com.example.shop.global.exception.DataInsertFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AdminProductController {
 
     private final AdminProductService adminProductService;
 
-    // 메인 브랜치의 코드 (유지)
+
     @GetMapping // 요청을 받으면 전체 리스트 출력
     public ResponseEntity<List<ProductTO>> getProducts() {
         List<ProductTO> lists = adminProductService.getAllProducts();
@@ -35,7 +36,7 @@ public class AdminProductController {
         return ResponseEntity.ok(lists);
     }
 
-    // feature/#40-물품수정 브랜치에서 추가한 코드
+    // 물품수정
     @PutMapping("/{id}")
     public ResponseEntity<String> updateProductById(
             @PathVariable Long id,
@@ -51,14 +52,17 @@ public class AdminProductController {
         }
     }
     @PostMapping
-    public ResponseEntity<String> insertProduct(@RequestBody ProductCreateRequest product) {
-        String result = adminProductService.insertProduct(product);
-
-        if ("정상적으로 입력되지 않았습니다".equals(result)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
+    public ResponseEntity<Object> insertProduct(@RequestBody ProductCreateRequest product) {
+        try {
+            int result = adminProductService.insertProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } catch (IllegalArgumentException e) {
+            // 입력값 검증 실패 시 400 Bad Request 응답
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (DataInsertFailedException e) {
+            // 데이터 삽입 실패 시 500 Internal Server Error 응답
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
     @GetMapping("/filter")
@@ -76,7 +80,6 @@ public class AdminProductController {
         }
 
     }
-
 
 
 
