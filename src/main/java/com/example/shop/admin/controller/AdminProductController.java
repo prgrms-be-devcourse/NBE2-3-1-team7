@@ -6,6 +6,7 @@ import com.example.shop.admin.dto.ProductUpdateRequest;
 import com.example.shop.admin.dto.ProductTO;
 import com.example.shop.admin.service.AdminProductService;
 import com.example.shop.global.exception.DataInsertFailedException;
+import com.example.shop.global.exception.ProductUpdateFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,17 +39,19 @@ public class AdminProductController {
 
     // 물품수정
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateProductById(
+    public ResponseEntity<Object> updateProductById(
             @PathVariable Long id,
             @RequestBody ProductUpdateRequest productUpdateRequest) {
 
-        productUpdateRequest.setProductId(id);
-        String result = adminProductService.postProduct(productUpdateRequest);
-
-        if ("정상적으로 입력되었습니다".equals(result)) {
+        try{
+            productUpdateRequest.setProductId(id);
+            int result=adminProductService.postProduct(productUpdateRequest);
             return ResponseEntity.ok(result); // 200 OK
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result); // 400 Bad Request
+        }catch (IllegalArgumentException e) {
+            // 입력값 검증 실패 시 400 Bad Request 응답
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }catch (ProductUpdateFailedException e) {//요청한 상품이 존재 하지 않을 떄
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
     @PostMapping

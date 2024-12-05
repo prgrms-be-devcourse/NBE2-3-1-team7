@@ -6,6 +6,7 @@ import com.example.shop.admin.dto.ProductFilterRequest;
 import com.example.shop.admin.dto.ProductUpdateRequest;
 import com.example.shop.admin.dto.ProductTO;
 import com.example.shop.global.exception.DataInsertFailedException;
+import com.example.shop.global.exception.ProductUpdateFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -18,13 +19,16 @@ public class AdminProductService {
 
     private final AdminDAO adminDAO;
 
-    // feature/#40-물품수정 브랜치에서 추가된 메서드
-    public String postProduct(ProductUpdateRequest productUpdateRequest) {
+    // 물품수정
+    public int postProduct(ProductUpdateRequest productUpdateRequest) {
+        if (productUpdateRequest.getProductId() == null) {
+            throw new IllegalArgumentException("상품 ID는 필수값입니다.");
+        }
         int result = adminDAO.updateProduct(productUpdateRequest);
         if (result == 0) {
-            return "정상적으로 입력되지 않았습니다";
+          throw new ProductUpdateFailedException("업데이트할 상품의 정보를 찾을 수 없거나 수정할 수 없습니다");
         }
-        return "정상적으로 입력되었습니다";
+        return result;
     }
 
     // 전체 물품 목록 조회
@@ -62,9 +66,6 @@ public class AdminProductService {
 
     //입력값 검증 로직
     private void validateProductCreateRequest(ProductCreateRequest productCreateRequest) {
-        if (productCreateRequest == null) {
-            throw new IllegalArgumentException("요청 객체가 null입니다.");
-        }
         if (!StringUtils.hasText(productCreateRequest.getProductName())) {
             throw new IllegalArgumentException("상품 이름은 필수값입니다.");
         }
@@ -77,6 +78,9 @@ public class AdminProductService {
 
 
     }
+
+
+
 }
 
 
