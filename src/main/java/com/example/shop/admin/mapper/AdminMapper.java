@@ -3,7 +3,9 @@ package com.example.shop.admin.mapper;
 import com.example.shop.admin.dto.ProductCreateRequest;
 import com.example.shop.admin.dto.ProductFilterRequest;
 import com.example.shop.admin.dto.ProductUpdateRequest;
+import com.example.shop.admin.dto.OrderDeliveryRequest;
 import com.example.shop.admin.dto.ProductTO;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,6 +18,7 @@ public interface AdminMapper {
 
     // main 브랜치에서 추가된 메서드
     List<ProductTO> selectAllProduct();
+    Long updateOrderDelivery(OrderDeliveryRequest orderDelivery);
 
     int insertProduct(ProductCreateRequest productCreateRequest);
 
