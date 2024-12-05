@@ -26,7 +26,7 @@ public class AdminProductService {
         }
         int result = adminDAO.updateProduct(productUpdateRequest);
         if (result == 0) {
-          throw new ProductUpdateFailedException("업데이트할 상품의 정보를 찾을 수 없거나 수정할 수 없습니다");
+          throw new ProductUpdateFailedException();
         }
         return result;
     }
@@ -46,7 +46,7 @@ public class AdminProductService {
         // 삽입 실패 처리
         if (result == 0) {
 
-            throw new DataInsertFailedException("데이터 삽입 실패: 요청 데이터가 저장되지 않았습니다.");
+            throw new DataInsertFailedException();
         }
 
         return result;

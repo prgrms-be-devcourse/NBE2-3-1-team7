@@ -4,6 +4,7 @@ package com.example.shop.global.exception;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+
 @Getter
 public enum ErrorCodes {
     MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "존재하지 않는 사용자입니다"),
@@ -33,7 +34,16 @@ public enum ErrorCodes {
 
     // Email 관련 에러
     EMAIL_FORM_CREATION_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "이메일 템플릿 생성 중 오류가 발생했습니다."),
-    EMAIL_SEND_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "Email 서버에 문제가 발생하였습니다.");
+    EMAIL_SEND_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "Email 서버에 문제가 발생하였습니다."),
+
+
+    //관리자 관련 에러
+    NOT_SAVE_CREATE(HttpStatus.BAD_REQUEST, "데이터 삽입 실패: 요청 데이터가 저장되지 않았습니다."),
+    NOT_MODIFIABLE_PRODUCT(HttpStatus.NOT_FOUND,"업데이트할 상품의 정보를 찾을 수 없거나 수정할 수 없습니다." );
+
+
+
+
 
     private String message;
     private HttpStatus status;

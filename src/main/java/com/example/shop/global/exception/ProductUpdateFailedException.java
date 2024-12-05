@@ -1,7 +1,9 @@
 package com.example.shop.global.exception;
 
-public class ProductUpdateFailedException extends RuntimeException {
-    public ProductUpdateFailedException(String message) {
-        super(message);
+import com.example.shop.global.response.BusinessExceptionHandler;
+
+public class ProductUpdateFailedException extends BusinessExceptionHandler {
+    public ProductUpdateFailedException() {
+        super(ErrorCodes.NOT_MODIFIABLE_PRODUCT);
     }
 }
