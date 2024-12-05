@@ -5,7 +5,7 @@
 
     <!-- 데이터 업데이트 -->
     <update id="updateProduct" parameterType="ProductUpdateRequest">
-        update product
+        update products
         set quantity=#{quantity}, price=#{price}, image=#{image}, description=#{description}, updated_at=Now()
         where product_Id=#{productId}
     </update>
@@ -13,12 +13,12 @@
     <!-- 모든 제품 조회 -->
     <select id="selectAllProduct" resultType="ProductTO">
         select product_id, product_name, quantity, price, image, description, created_at, updated_at
-        from product
+        from products
     </select>
 
     <insert id="insertProduct"  parameterType="ProductCreateRequest">
 
-        insert into product(product_name,quantity,price,image,description,created_at ,updated_at) values (#{productName},#{quantity},#{price},#{image},#{description},Now(),NOW())
+        insert into products(product_name,quantity,price,image,description,created_at ,updated_at) values (#{productName},#{quantity},#{price},#{image},#{description},Now(),NOW())
 
     </insert>
 
