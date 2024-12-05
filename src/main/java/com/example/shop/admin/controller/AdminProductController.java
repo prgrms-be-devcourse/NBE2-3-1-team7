@@ -51,10 +51,10 @@ public class AdminProductController {
         }
     }
     @PostMapping
-    public ResponseEntity<String> insertProduct(@RequestBody ProductCreateRequest product) {
-        String result = adminProductService.insertProduct(product);
+    public ResponseEntity<Integer> insertProduct(@RequestBody ProductCreateRequest product) {
+        int result = adminProductService.insertProduct(product);
 
-        if ("정상적으로 입력되지 않았습니다".equals(result)) {
+        if (result==0) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(result);
         }
 
