@@ -36,6 +36,7 @@ public class AdminProductService {
         return adminDAO.getAllProducts();
     }
 
+
     //물품 생성
     public int insertProduct(ProductCreateRequest productCreateRequest)throws DataInsertFailedException {
         validateProductCreateRequest(productCreateRequest);
@@ -49,7 +50,8 @@ public class AdminProductService {
             throw new DataInsertFailedException();
         }
 
-        return result;
+
+
     }
 
 
@@ -63,6 +65,7 @@ public class AdminProductService {
 
         return adminDAO.getProductByFilter(filter); // DAO 호출
     }
+
 
     //입력값 검증 로직
     private void validateProductCreateRequest(ProductCreateRequest productCreateRequest) {
@@ -78,6 +81,7 @@ public class AdminProductService {
 
 
     }
+
 
 
 

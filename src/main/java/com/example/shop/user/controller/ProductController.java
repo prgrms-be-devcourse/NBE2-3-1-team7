@@ -1,12 +1,12 @@
 package com.example.shop.user.controller;
 
+import com.example.shop.common.dto.PageResponse;
+import com.example.shop.user.dto.ProductDetailResponse;
 import com.example.shop.user.dto.ProductResponse;
 import com.example.shop.user.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,12 +21,26 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponse> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<PageResponse<ProductResponse>> getAllProducts(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size) {
+
+        if (page <= 0) { page = 1;}
+        if (size <= 0) { size = 10;}
+
+        PageResponse<ProductResponse> response = productService.getAllProducts(page, size);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public ProductResponse getProductDetail(@PathVariable Long id) {
-        return productService.getProductDetail(id);
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDetailResponse> getProductDetail(@PathVariable Long productId) {
+        return ResponseEntity.ok(productService.getProductDetail(productId));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductResponse>> getProductByNameOrPrice(
+            @RequestParam(value = "productName", required = false) String productName,
+            @RequestParam(value = "price", required = false) Long price) {
+        return ResponseEntity.ok(productService.getProductByNameOrPrice(productName, price));
     }
 }

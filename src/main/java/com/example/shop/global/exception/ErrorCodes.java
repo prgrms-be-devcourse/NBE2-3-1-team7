@@ -27,7 +27,7 @@ public enum ErrorCodes {
     ORDER_NOT_FOUND(HttpStatus.BAD_REQUEST, "주문 내역이 존재하지 않습니다."),
     NOT_MODIFIABLE_ORDER(HttpStatus.BAD_REQUEST, "주문을 수정할 수 없는 상태입니다."),
     ORDER_DETAIL_NOT_FOUND(HttpStatus.BAD_REQUEST, "주문 상세 내역을 찾을수 없습니다."),
-    UNAUTHORIZED_ORDER_ACCESS(HttpStatus.BAD_REQUEST, "주문자 본인만 수정할 수 있습니다."),
+    UNAUTHORIZED_ORDER_ACCESS(HttpStatus.BAD_REQUEST, "주문자 본인만 접근할 수 있습니다."),
 
     // 재고 관련
     NOT_ENOUGH_QUANTITY(HttpStatus.BAD_REQUEST, "상품 수량이 부족합니다."),
@@ -37,11 +37,19 @@ public enum ErrorCodes {
     EMAIL_SEND_ERROR(HttpStatus.SERVICE_UNAVAILABLE, "Email 서버에 문제가 발생하였습니다."),
 
 
+
     //관리자 관련 에러
     NOT_SAVE_CREATE(HttpStatus.BAD_REQUEST, "데이터 삽입 실패: 요청 데이터가 저장되지 않았습니다."),
     NOT_MODIFIABLE_PRODUCT(HttpStatus.NOT_FOUND,"업데이트할 상품의 정보를 찾을 수 없거나 수정할 수 없습니다." );
 
 
+
+
+    // 메뉴 조회 관련 에러
+    PRODUCTS_EMPTY(HttpStatus.NOT_FOUND, "상품이 존재하지 않습니다."),
+    PRODUCTID_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 상품을 찾을 수 없습니다."),
+    PRODUCTS_SEARCH_EMPTY(HttpStatus.NOT_FOUND, "조건에 맞는 상품이 없습니다."),
+    PRODUCTS_SEARCH_BY_ONE_LETTER(HttpStatus.BAD_REQUEST, "상품 이름은 한 글자로 검색할 수 없습니다.");
 
 
 
