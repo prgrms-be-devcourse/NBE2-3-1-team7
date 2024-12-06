@@ -1,7 +1,9 @@
 package com.example.shop.user.controller;
 
+import com.example.shop.common.dto.PageResponse;
 import com.example.shop.user.dto.CreateOrderRequest;
-import com.example.shop.user.dto.OrderResponse;
+import com.example.shop.common.dto.OrderListResponse;
+import com.example.shop.common.dto.OrderResponse;
 import com.example.shop.user.dto.UpdateOrderRequest;
 import com.example.shop.user.service.OrderService;
 import jakarta.validation.Valid;
@@ -28,5 +30,24 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping
+    public ResponseEntity<PageResponse<OrderListResponse>> getOrders(
+            @RequestParam(defaultValue = "1") int page
+            , @RequestParam(defaultValue = "10") int size) {
+        PageResponse<OrderListResponse> response = orderService.getOrders(page, size);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{orderNumber}")
+    public ResponseEntity<OrderResponse> getOrder(@PathVariable String orderNumber) {
+        OrderResponse orderResponse = orderService.getOrder(orderNumber);
+        return ResponseEntity.ok(orderResponse);
+    }
+
+    @PostMapping("/{orderNumber}/cancel")
+    public ResponseEntity<OrderResponse> cancelOrder(@PathVariable String orderNumber) {
+        OrderResponse response = orderService.cancelOrder(orderNumber);
+        return ResponseEntity.ok(response);
+    }
 
 }

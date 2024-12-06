@@ -16,11 +16,12 @@ public interface AdminMapper {
     // feature/#40-물품수정 브랜치에서 추가된 메서드
     int updateProduct(ProductUpdateRequest productUpdateRequest);
 
-    // main 브랜치에서 추가된 메서드
     List<ProductTO> selectAllProduct();
-    Long updateOrderDelivery(OrderDeliveryRequest orderDelivery);
 
     int insertProduct(ProductCreateRequest productCreateRequest);
 
     List<ProductTO> selectProductByFilter(ProductFilterRequest productFilterRequest);
+
+    Long updateOrderDelivery(OrderDeliveryRequest orderDelivery);
+  
 }
