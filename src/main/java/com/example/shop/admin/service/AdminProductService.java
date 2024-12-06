@@ -5,8 +5,7 @@ import com.example.shop.admin.dto.ProductCreateRequest;
 import com.example.shop.admin.dto.ProductFilterRequest;
 import com.example.shop.admin.dto.ProductUpdateRequest;
 import com.example.shop.admin.dto.ProductTO;
-import com.example.shop.global.exception.DataInsertFailedException;
-import com.example.shop.global.exception.ProductUpdateFailedException;
+import com.example.shop.global.exception.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -22,7 +21,7 @@ public class AdminProductService {
     // 물품수정
     public int postProduct(ProductUpdateRequest productUpdateRequest) {
         if (productUpdateRequest.getProductId() == null) {
-            throw new IllegalArgumentException("상품 ID는 필수값입니다.");
+            throw new ProductIDModifiedNotFoundException();
         }
         int result = adminDAO.updateProduct(productUpdateRequest);
         if (result == 0) {
@@ -58,7 +57,7 @@ public class AdminProductService {
         if (filter.getMinQuantity() == null ||
                 filter.getMinPrice() == null ||
                 filter.getMaxPrice() == null) {
-            throw new IllegalArgumentException("모든 필수값을 입력해야 합니다.");
+            throw new ProductFilterNotFoundException();
         }
 
         return adminDAO.getProductByFilter(filter); // DAO 호출
@@ -68,13 +67,13 @@ public class AdminProductService {
     //입력값 검증 로직
     private void validateProductCreateRequest(ProductCreateRequest productCreateRequest) {
         if (!StringUtils.hasText(productCreateRequest.getProductName())) {
-            throw new IllegalArgumentException("상품 이름은 필수값입니다.");
+            throw new ProductNameNotInsertException();
         }
         if (productCreateRequest.getPrice() == null) {
-            throw new IllegalArgumentException("가격은 필수값입니다.");
+            throw new ProductPriceNotInsertException();
         }
         if (productCreateRequest.getQuantity() == null) {
-            throw new IllegalArgumentException("수량은 필수값입니다.");
+            throw new ProductQuantityNotInsertException();
         }
 
 
