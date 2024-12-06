@@ -48,7 +48,6 @@ public class AdminProductService {
 
             throw new DataInsertFailedException();
         }
-
         return result;
     }
 
