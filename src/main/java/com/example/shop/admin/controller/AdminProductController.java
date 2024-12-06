@@ -7,6 +7,7 @@ import com.example.shop.admin.dto.ProductTO;
 import com.example.shop.admin.service.AdminProductService;
 import com.example.shop.global.exception.DataInsertFailedException;
 import com.example.shop.global.exception.ProductUpdateFailedException;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class AdminProductController {
 
     private final AdminProductService adminProductService;
 
-
+    @Operation(summary = "전체 목록 조회")
     @GetMapping // 요청을 받으면 전체 리스트 출력
     public ResponseEntity<List<ProductTO>> getProducts() {
         List<ProductTO> lists = adminProductService.getAllProducts();
@@ -37,7 +38,7 @@ public class AdminProductController {
         return ResponseEntity.ok(lists);
     }
 
-    // 물품수정
+    @Operation(summary = "물품 목록 수정")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateProductById(
             @PathVariable Long id,
@@ -54,6 +55,7 @@ public class AdminProductController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    @Operation(summary = "물품 생성")
     @PostMapping
     public ResponseEntity<Object> insertProduct(@RequestBody ProductCreateRequest product) {
         try {
@@ -68,7 +70,7 @@ public class AdminProductController {
         }
     }
 
-
+    @Operation(summary = "물품 필터링")
     @GetMapping("/filter")
     public ResponseEntity<Object> getProductsByFilter(@ModelAttribute ProductFilterRequest productFilterRequest) {
 
