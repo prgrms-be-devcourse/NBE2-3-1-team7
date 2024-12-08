@@ -1,12 +1,14 @@
 package com.example.shop.admin.dao;
 
 import com.example.shop.admin.dto.OrderDeliveryRequest;
+import com.example.shop.global.setting.RedisTest;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Set;
@@ -14,8 +16,10 @@ import java.util.Set;
 import static com.example.shop.batch.util.OrderDeliveryBatchUtil.getOrderKeyYesterday;
 import static org.assertj.core.api.Assertions.assertThat;
 
+
 @SpringBootTest
-class OrderDeliveryRepositoryTest {
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+class OrderDeliveryRepositoryTest extends RedisTest {
 
     @Autowired
     private OrderDeliveryRepository orderDeliveryRepository;
@@ -25,7 +29,7 @@ class OrderDeliveryRepositoryTest {
     @BeforeEach
     void setup() {
         for (Long i = 0L; i < 150; i++) {
-            OrderDeliveryRequest order = new OrderDeliveryRequest("test%s@test.com".formatted(i), i*102);
+            OrderDeliveryRequest order = new OrderDeliveryRequest("test%s@test.com".formatted(i), i+"test");
 
             orderDeliveryRepository.addOrderEmail(key, order);
         }
@@ -40,7 +44,7 @@ class OrderDeliveryRepositoryTest {
     @Test
     void addOrderEmail() {
         // given
-        OrderDeliveryRequest request = new OrderDeliveryRequest("testtest@test.com", 999999L);
+        OrderDeliveryRequest request = new OrderDeliveryRequest("testtest@test.com", "99999test");
         // when
         Long addCount = orderDeliveryRepository.addOrderEmail(key, request);
 
@@ -89,7 +93,7 @@ class OrderDeliveryRepositoryTest {
     @Test
     void existOrder() {
         // given
-        OrderDeliveryRequest request = new OrderDeliveryRequest("test50@test.com", 5100L);
+        OrderDeliveryRequest request = new OrderDeliveryRequest("test50@test.com", "50test");
 
         // when & then
         assertThat(orderDeliveryRepository.existOrder(key, request)).isTrue();

@@ -46,18 +46,19 @@ public class AdminProductController {
 
 
             productUpdateRequest.setProductId(id);
-            int result=adminProductService.postProduct(productUpdateRequest);
-            return ResponseEntity.ok(result); // 200 OK
+            adminProductService.postProduct(productUpdateRequest);
+
+            return ResponseEntity.status(HttpStatus.OK).body("200 OK"); // 200 OK
 
     }
 
 
     @Operation(summary = "물품 생성")
     @PostMapping
-    public ResponseEntity<Object> insertProduct(@RequestBody ProductCreateRequest product) {
+    public ResponseEntity<String> insertProduct(@RequestBody ProductCreateRequest product) {
 
-            int result = adminProductService.insertProduct(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+            adminProductService.insertProduct(product);
+            return ResponseEntity.status(HttpStatus.CREATED).body("201 CREATED");
 
     }
 
