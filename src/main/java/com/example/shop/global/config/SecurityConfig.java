@@ -2,6 +2,7 @@ package com.example.shop.global.config;
 
 import com.example.shop.auth.repository.BlackListRepository;
 import com.example.shop.auth.repository.RefreshTokenRepository;
+import com.example.shop.global.config.auth.CustomAccessDeniedHandler;
 import com.example.shop.global.config.auth.JwtAuthenticationEntryPoint;
 import com.example.shop.global.config.auth.JwtAuthenticationFilter;
 import com.example.shop.global.config.auth.JwtProvider;
@@ -52,6 +53,8 @@ public class SecurityConfig  {
                                 .anyRequest().authenticated())
                 .exceptionHandling((exception) ->
                         exception.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))
+                .exceptionHandling((exception) ->
+                        exception.accessDeniedHandler(new CustomAccessDeniedHandler()))
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, blackListRepository), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
