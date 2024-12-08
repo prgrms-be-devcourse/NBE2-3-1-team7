@@ -40,7 +40,7 @@ public class AdminProductController {
 
     @Operation(summary = "물품 목록 수정")
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateProductById(
+    public ResponseEntity<Void> updateProductById(
             @PathVariable Long id,
             @RequestBody ProductUpdateRequest productUpdateRequest) {
 
@@ -48,17 +48,17 @@ public class AdminProductController {
             productUpdateRequest.setProductId(id);
             adminProductService.postProduct(productUpdateRequest);
 
-            return ResponseEntity.status(HttpStatus.OK).body("200 OK"); // 200 OK
+            return ResponseEntity.ok().build(); // 200 OK
 
     }
 
 
     @Operation(summary = "물품 생성")
     @PostMapping
-    public ResponseEntity<String> insertProduct(@RequestBody ProductCreateRequest product) {
+    public ResponseEntity<Void> insertProduct(@RequestBody ProductCreateRequest product) {
 
             adminProductService.insertProduct(product);
-            return ResponseEntity.status(HttpStatus.CREATED).body("201 CREATED");
+            return ResponseEntity.status(HttpStatus.CREATED).build();
 
     }
 
